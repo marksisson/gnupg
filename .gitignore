@@ -1,0 +1,7 @@
+*.backup
+*.conf
+*.d
+*.db
+*.gpg
+*.kbx
+sshcontrol
