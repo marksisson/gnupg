@@ -76,15 +76,15 @@
       "locked": {
         "lastModified": 1770046085,
         "narHash": "sha256-6J/ETTgchJMIvsK5H2rXwBWsRC5F6PBLqDdCgwIOkUY=",
-        "ref": "refs/heads/main",
+        "owner": "marksisson",
+        "repo": "parts",
         "rev": "2318db0addd9299774f6ba50e8e322d33d1382d7",
-        "revCount": 69,
-        "type": "git",
-        "url": "ssh://git@github.com/marksisson/parts"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/marksisson/parts"
+        "owner": "marksisson",
+        "repo": "parts",
+        "type": "github"
       }
     },
     "root": {

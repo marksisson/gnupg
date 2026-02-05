@@ -6,12 +6,14 @@ gnupg_encrypted_data := "gnupg.age"
   just --list
 
 backup: prepare_gnupg_directory
-  gpg-connect-agent killagent /bye
+  export GNUPGHOME={{gnupg_directory}}
+  gpgconf --kill gpg-agent
   (cd {{gnupg_directory}} || exit; tar -chz *.conf *.d *.db *.gpg *.kbx) | age -p > {{justfile_directory()}}/{{gnupg_encrypted_data}}
   gpg-connect-agent reloadagent /bye
 
 restore: prepare_gnupg_directory
-  gpg-connect-agent killagent /bye
+  export GNUPGHOME={{gnupg_directory}}
+  gpgconf --kill gpg-agent
   age --decrypt {{justfile_directory()}}/{{gnupg_encrypted_data}} | tar --directory {{gnupg_directory}} -xz
   gpg-connect-agent reloadagent /bye
 

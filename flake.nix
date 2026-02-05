@@ -1,5 +1,5 @@
 {
-  inputs.parts.url = "git+ssh://git@github.com/marksisson/parts";
+  inputs.parts.url = "github:marksisson/parts";
 
   outputs = inputs:
     let flakeref = "github:marksisson/gnupg"; in with inputs.parts; with lib;
