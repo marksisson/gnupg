@@ -10,14 +10,14 @@ backup: prepare_gnupg_directory
   export GNUPGHOME={{gnupg_directory}}
   gpgconf --kill gpg-agent
   (cd {{gnupg_directory}} || exit; tar -chz *.conf *.d *.db *.gpg *.kbx) | age -p < /dev/tty > {{justfile_directory()}}/{{gnupg_encrypted_data}}
-  gpg-connect-agent reloadagent /bye
+  gpgconf --launch gpg-agent  
 
 restore: prepare_gnupg_directory
   #!/usr/bin/env bash
   export GNUPGHOME={{gnupg_directory}}
   gpgconf --kill gpg-agent
   age --decrypt {{justfile_directory()}}/{{gnupg_encrypted_data}} < /dev/tty | tar --directory {{gnupg_directory}} -xz
-  gpg-connect-agent reloadagent /bye
+  gpgconf --launch gpg-agent  
 
 [private]
 @prepare_gnupg_directory:
