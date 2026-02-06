@@ -14,10 +14,17 @@ backup: prepare_gnupg_directory
 
 restore: prepare_gnupg_directory
   #!/usr/bin/env bash
+  set -o pipefail
   export GNUPGHOME={{gnupg_directory}}
   gpgconf --kill gpg-agent
-  age --decrypt {{justfile_directory()}}/{{gnupg_encrypted_data}} < /dev/tty | tar --directory {{gnupg_directory}} -xz
-  gpgconf --launch gpg-agent  
+
+  until age --decrypt {{justfile_directory()}}/{{gnupg_encrypted_data}} < /dev/tty \
+    | tar --directory {{gnupg_directory}} -xz; do
+    echo "Wrong password or decryption failed. Try again."
+  done
+
+  echo "Restore successful."
+  gpgconf --launch gpg-agent
 
 [private]
 @prepare_gnupg_directory:
