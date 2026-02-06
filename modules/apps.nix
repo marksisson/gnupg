@@ -13,13 +13,17 @@
 
         just --justfile ${self + "/justfile"} restore
 
-        CONF="$HOME/.config/gnupg/gpg-agent.conf"
+        export GNUPGHOME="$HOME/.config/gnupg"
+
+        gpgconf --kill gpg-agent
+
+        CONF="$GNUPGHOME/gpg-agent.conf"
         {
           grep -v '^pinentry-program' "$CONF" 2>/dev/null
           echo "pinentry-program ${pinentry-program}"
         } > "$CONF.tmp" && mv -f "$CONF.tmp" "$CONF" && chmod 600 "$CONF"
 
-        gpg-connect-agent reloadagent /bye
+        gpgconf --launch gpg-agent
       '';
     };
 }
