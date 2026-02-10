@@ -18,13 +18,13 @@ restore: prepare_gnupg_directory
   export GNUPGHOME={{gnupg_directory}}
   gpgconf --kill gpg-agent
 
-  echo HEADER "Decrypt gnupg configuration..."
+  echo $HEADER "Decrypt gnupg configuration..."
   until age --decrypt {{justfile_directory()}}/{{gnupg_encrypted_data}} < /dev/tty \
     | tar --directory {{gnupg_directory}} -xz; do
-    echo ERROR "Wrong password or decryption failed. Try again."
+    echo $ERROR "Wrong password or decryption failed. Try again."
   done
 
-  echo SUCCESS "Restore successful."
+  echo $SUCCESS "Restore successful."
   gpgconf --launch gpg-agent
 
 [private]
